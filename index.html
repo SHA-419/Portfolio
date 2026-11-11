@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hashir Asim · AI & Automation</title>
+<meta name="description" content="Hashir Asim builds AI agents and automations for operations teams: Claude-powered Slack bots, Zapier and Airtable systems, Google Apps Script pipelines and websites.">
+<meta property="og:title" content="Hashir Asim · AI & Automation">
+<meta property="og:description" content="AI agents and automations for operations teams: Slack bots, Zapier, Airtable, Apps Script and Claude.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E0F12" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316181D'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='700' fill='%23FB923C' text-anchor='middle'%3EHA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #16181D;
+    --muted: #5B606B;
+    --faint: #8A8F99;
+    --line: #E4E3DD;
+    --accent: #C2410C;
+    --accent-soft: #FFF1E8;
+    --live: #15803D;
+    --live-soft: #E9F7EE;
+    --wip: #A16207;
+    --wip-soft: #FDF6E3;
+    --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --serif: "Instrument Serif", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E0F12;
+      --surface: #15171B;
+      --text: #ECECE8;
+      --muted: #A0A4AD;
+      --faint: #70747D;
+      --line: #25272D;
+      --accent: #FB923C;
+      --accent-soft: #2A1A10;
+      --live: #4ADE80;
+      --live-soft: #102217;
+      --wip: #FACC15;
+      --wip-soft: #26200B;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 600px) { .wrap { padding: 0 16px; } body { font-size: 16px; } }
+
+  /* Top bar */
+  .top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid transparent; }
+  .top.scrolled { border-bottom-color: var(--line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .mark { font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+  .mark span { color: var(--accent); }
+  .nav { display: flex; gap: 24px; font-size: 14px; }
+  .nav a { text-decoration: none; color: var(--muted); }
+  .nav a:hover { color: var(--text); }
+  @media (max-width: 600px) { .nav { gap: 16px; } .nav .hide-sm { display: none; } }
+
+  /* Hero */
+  .hero { padding: 88px 0 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
+  h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 600; margin: 0; max-width: 18ch; text-wrap: balance; }
+  h1 em { font-family: var(--serif); font-weight: 400; font-style: italic; letter-spacing: -0.01em; color: var(--accent); }
+  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 60ch; margin: 28px 0 0; }
+  .lede strong { color: var(--text); font-weight: 500; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; font-size: 15px; font-weight: 500; text-decoration: none; border: 1px solid var(--line); background: var(--surface); transition: border-color .15s, transform .15s; }
+  .btn:hover { border-color: var(--text); }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn.primary:hover { transform: translateY(-1px); }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* Facts */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 72px; }
+  .fact { padding: 24px 20px 24px 0; }
+  .fact + .fact { padding-left: 20px; border-left: 1px solid var(--line); }
+  .fact b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+  .fact span { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+  @media (max-width: 800px) {
+    .facts { grid-template-columns: 1fr 1fr; }
+    .fact:nth-child(3) { padding-left: 0; border-left: 0; }
+    .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+
+  /* Sections */
+  section.block { padding: 96px 0 0; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -0.03em; font-weight: 600; margin: 0; line-height: 1.15; }
+  .head p { margin: 0; color: var(--muted); font-size: 15px; max-width: 46ch; }
+
+  /* Case studies */
+  .case { border-top: 1px solid var(--line); padding: 40px 0 44px; display: grid; grid-template-columns: 72px 1fr; gap: 0 24px; }
+  .case:last-of-type { border-bottom: 1px solid var(--line); }
+  .num { font-family: var(--mono); font-size: 14px; color: var(--faint); padding-top: 8px; }
+  .case h3 { font-size: clamp(21px, 2.4vw, 26px); letter-spacing: -0.02em; font-weight: 600; margin: 0; line-height: 1.25; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 28px; }
+  .status { font-family: var(--mono); font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--wip-soft); color: var(--wip); }
+  .status.live { background: var(--live-soft); color: var(--live); }
+  .status.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px; vertical-align: 1px; }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--muted); padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .cols h4 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); margin: 0 0 8px; }
+  .cols p { margin: 0; font-size: 15.5px; line-height: 1.6; }
+  .cols .result p { color: var(--text); }
+  .cols .result h4 { color: var(--accent); }
+  .case a.inline { color: var(--accent); text-underline-offset: 3px; }
+  @media (max-width: 860px) {
+    .case { grid-template-columns: 1fr; }
+    .num { padding: 0 0 8px; }
+    .cols { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .also { margin: 28px 0 0; color: var(--muted); font-size: 15px; }
+  .also b { color: var(--text); font-weight: 500; }
+
+  /* Toolkit */
+  .kit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kit div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .kit h3 { font-size: 16px; font-weight: 600; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .kit ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .kit li { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding: 4px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+  @media (max-width: 860px) { .kit { grid-template-columns: 1fr; } }
+
+  /* Principles */
+  .ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .ways h3 { font-size: 18px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .ways h3::before { content: ""; display: block; width: 24px; height: 2px; background: var(--accent); margin-bottom: 16px; }
+  .ways p { margin: 0; color: var(--muted); font-size: 15.5px; }
+  @media (max-width: 860px) { .ways { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* Contact */
+  .contact { padding: 120px 0 64px; }
+  .contact h2 { font-size: clamp(32px, 5vw, 52px); letter-spacing: -0.035em; max-width: 18ch; }
+  .contact p { color: var(--muted); max-width: 52ch; margin: 20px 0 0; }
+  .mail { display: inline-block; margin-top: 32px; font-size: clamp(18px, 2.6vw, 26px); font-weight: 500; letter-spacing: -0.02em; text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 2px; word-break: break-all; }
+  .mail:hover { color: var(--accent); }
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; font-size: 13px; color: var(--faint); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#">Hashir Asim<span>.</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#toolkit" class="hide-sm">Toolkit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">AI &amp; automation</p>
+      <h1>I build the AI agents and automations an operations team <em>runs on.</em></h1>
+      <p class="lede">Claude-powered Slack bots, Zapier and Airtable systems, and Google Apps Script pipelines, built for <strong>a B2B support and operations company serving 1,000+ marketing agencies</strong>. I also design and build websites.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:hashir.asim14@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email me
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/syed-hashir-b07787201" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+
+      <div class="facts" role="list">
+        <div class="fact" role="listitem"><b>1,250</b><span>agencies scored every week by a health index I maintain</span></div>
+        <div class="fact" role="listitem"><b>10 min</b><span>how often new call recordings are matched and queued for AI review</span></div>
+        <div class="fact" role="listitem"><b>2.26M</b><span>database rows in a migration I rehearsed end to end</span></div>
+        <div class="fact" role="listitem"><b>15</b><span>pages in a company website I designed and built</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="head">
+        <h2>Selected work</h2>
+        <p>Internal systems are described without names or data, since they belong to my employer and its clients.</p>
+      </div>
+
+      <article class="case">
+        <div class="num">01</div>
+        <div>
+          <h3>An AI agent that triages every request sent to operations</h3>
+          <div class="meta">
+            <span class="status">Pre-launch</span>
+            <span class="tag">TypeScript</span><span class="tag">Claude API</span><span class="tag">Cloudflare Workers</span><span class="tag">Durable Objects</span><span class="tag">Slack</span><span class="tag">Airtable</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>Requests reached ops through two busy Slack channels. A Zap copied every post into the task list, so work that was already done or already open came in again.</p></div>
+            <div><h4>What I built</h4><p>A Slack bot that becomes the only poster in both channels. People message it directly, and a Claude agent checks the request against the live task list. It decides whether the request is already done, already open, an escalation, a new project or not for ops, then posts and records it.</p></div>
+            <div class="result"><h4>Result</h4><p>27 unit tests pass, including tests that protect the post format the team's Airtable formulas read. A test mode posts to private channels and writes nothing, so it can be trialled safely before launch.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="num">02</div>
+        <div>
+          <h3>A call-recording pipeline that feeds an AI review agent</h3>
+          <div class="meta">
+            <span class="status live">Live</span>
+            <span class="tag">Google Apps Script</span><span class="tag">Google Drive API</span><span class="tag">Airtable API</span><span class="tag">AI agents</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>An AI agent was meant to review every onboarding call. But recordings reach Google Drive hours or days after the call, with nothing tying them to it, so the agent had nothing to work on.</p></div>
+            <div><h4>What I built</h4><p>An Apps Script job that runs every 10 minutes. It matches each new recording to its call, writes the link back to the call record, and creates a review task with everything the agent needs to find the call, the recording and its checklist.</p></div>
+            <div class="result"><h4>Result</h4><p>The first version matched on nearest time and linked 22 of 40 backfilled calls to the wrong recording. Requiring the guest's name in the file title fixed it, and anything unmatched is now logged for a person rather than guessed. The full chain was tested end to end: transcript, checklist review and score.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="num">03</div>
+        <div>
+          <h3>Escalation tracking inside Slack, with SLA clocks</h3>
+          <div class="meta">
+            <span class="status">Built</span>
+            <span class="tag">Zapier</span><span class="tag">Slack</span><span class="tag">Airtable</span><span class="tag">Forms</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>Client escalations were raised in Slack threads with no clear owner, no response clock and no record of how each one was closed.</p></div>
+            <div><h4>What I built</h4><p>Case management that stays in Slack. A reaction or form opens a case and posts a case card, an emoji claims it, and a close form records the root cause. Airtable tracks owner, status and response time in business hours. It alerts when a case passes 48 hours and flags churn words in the client's own message.</p></div>
+            <div class="result"><h4>Result</h4><p>Seven Zaps and one Airtable base turn loose threads into tracked cases. Every case now has an owner, a timestamped history and a reason it closed.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="num">04</div>
+        <div>
+          <h3>A weekly health index for 1,250 client agencies</h3>
+          <div class="meta">
+            <span class="status">Rolling out</span>
+            <span class="tag">Airtable automations</span><span class="tag">Airtable scripting</span><span class="tag">Formulas</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>A weekly job records a health score for every agency. The team read the history rows as duplicates, cancelled agencies still showed up, and the table grew by 1,250 rows every week.</p></div>
+            <div><h4>What I built</h4><p>I added each agency's real account status from the source of truth, so the team's view shows only active agencies, with 130 cancelled or paused ones hidden. Then I redesigned storage: one live row per agency updated in place, a monthly snapshot kept for four months, and 30-, 60- and 90-day trend fields.</p></div>
+            <div class="result"><h4>Result</h4><p>The table stays at about 5–6k rows instead of growing forever, and the team gets trends instead of duplicate-looking rows. Before rollout, I simulated the new logic on 33 weeks of real data.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="num">05</div>
+        <div>
+          <h3>Bringing a production AI platform back, then giving it backups</h3>
+          <div class="meta">
+            <span class="status">Ongoing</span>
+            <span class="tag">Linux</span><span class="tag">SSH</span><span class="tag">MySQL / TiDB</span><span class="tag">Bash</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>An internal AI operations platform went down after a hosting plan change rotated its database password. The database had no backup anywhere.</p></div>
+            <div><h4>What I built</h4><p>I restored service by passing the new credential straight to the server over SSH, never printing it or writing it to disk, then redeployed the recorded release. Next I started moving the 84-table, 2.26-million-row database to a self-hosted one with nightly backups.</p></div>
+            <div class="result"><h4>Result</h4><p>The migration rehearsal caught a table with no primary key, which would have broken the restore. I fixed it at the source before cutover, not in the copy.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="num">06</div>
+        <div>
+          <h3>Dropora Labs: a website for an AI services company</h3>
+          <div class="meta">
+            <span class="status live">Live</span>
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">cPanel</span>
+          </div>
+          <div class="cols">
+            <div><h4>Problem</h4><p>A new AI services company needed a site that looked properly designed and could run on low-cost shared hosting with no Node runtime.</p></div>
+            <div><h4>What I built</h4><p>A fifteen-page site with services, ready-made solutions, case studies, articles and an enquiry form. It's plain HTML, CSS and JavaScript with one PHP form handler and no build step. It also has a living style guide and a handover document anyone can pick up.</p></div>
+            <div class="result"><h4>Result</h4><p>Live at <a class="inline" href="https://droporalabs.com" target="_blank" rel="noopener">droporalabs.com</a>. Editing a file and uploading it is the whole deployment.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <p class="also"><b>Also:</b> a Zapier integration that sends one enterprise client's new support requests straight into their own workflow by webhook, filtered to that client only.</p>
+    </div>
+  </section>
+
+  <section class="block" id="toolkit">
+    <div class="wrap">
+      <div class="head"><h2>Toolkit</h2></div>
+      <div class="kit">
+        <div>
+          <h3>AI</h3>
+          <ul><li>Claude API</li><li>Agent design</li><li>Prompt &amp; routing logic</li><li>AI agent skills</li><li>Claude Code</li></ul>
+        </div>
+        <div>
+          <h3>Automation</h3>
+          <ul><li>Zapier</li><li>Paths &amp; code steps</li><li>Webhooks</li><li>Airtable automations</li><li>Airtable scripting</li><li>Google Apps Script</li><li>Slack apps</li></ul>
+        </div>
+        <div>
+          <h3>Engineering</h3>
+          <ul><li>TypeScript</li><li>JavaScript</li><li>Cloudflare Workers</li><li>Durable Objects</li><li>D1</li><li>PHP</li><li>SQL</li><li>Bash</li><li>Linux &amp; SSH</li><li>Git</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><h2>How I work</h2></div>
+      <div class="ways">
+        <div><h3>Test on real data first</h3><p>Dry-run modes, private test channels and simulations on real history, so the first run that counts is not the first run.</p></div>
+        <div><h3>Fix the cause</h3><p>When a match is wrong, change the rule, not the record. When a restore fails, fix the source table, not the copy.</p></div>
+        <div><h3>Leave it runnable</h3><p>I write handover notes for someone with no context, so a system keeps running without me.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Have repetitive work an agent should be doing?</h2>
+      <p>I'm open to AI and automation roles. Email is the fastest way to reach me.</p>
+      <a class="mail" href="mailto:hashir.asim14@gmail.com">hashir.asim14@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> Hashir Asim</span>
+    <span><a href="https://www.linkedin.com/in/syed-hashir-b07787201" target="_blank" rel="noopener">LinkedIn</a> · <a href="#top">Back to top</a></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var top = document.getElementById('top');
+    function onScroll() { top.classList.toggle('scrolled', window.scrollY > 8); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  })();
+</script>
+</body>
+</html>
